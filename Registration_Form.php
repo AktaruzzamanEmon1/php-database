@@ -1,15 +1,16 @@
-<?php 
+<?php  
+    require 'DbInsert.php'; 
 
-	$firstName =  $lastName = $userName = $password = "";
+	$firstname =  $lastName = $userName = $password = "";
 	$isValid = true;
 	$firstNameErr =  $lastNameErr = $userNameErr = $passwordErr = "";
 	$successfulMessage = $errorMessage = "";
 	if($_SERVER['REQUEST_METHOD'] === "POST") {
-		$firstName = $_POST['firstname'];
+		$firstname = $_POST['firstname'];
 		$lastName = $_POST['lastname'];
 		$userName = $_POST['username'];
 		$password = $_POST['password'];
-		if(empty($firstName)) {
+		if(empty($firstname)) {
 			$firstNameErr = "First name can not be empty!";
 			$isValid = false;
 		}
@@ -27,31 +28,31 @@
 			$isValid = false;
 		}
 		if($isValid) {
-			if(strlen($username) > 5) {
-				$userNameErr = "User name can not be empty!";
+			if(strlen($userName) > 5) {
+				$userNameErr = "Username max size 5!";
 			    $isValid = false;
 
 			}
 			if(strlen($password) > 8) {
-				$passwordErr = "Password can not be empty!";
+				$passwordErr = "Password max size 8!";
 			     $isValid = false;
 
 			}
 			if($isValid){
-			$firstName = test_input($firstName);
+			$firstname = test_input($firstname);
 			$lastName = test_input($lastName);
 			$userName = test_input($userName);
 			$password = test_input($password);
 
 			
-			$response = true;
+			$response = register( $firstname, $lastName, $userName, $password);
 			if($response) {
 				$successfulMessage = "Successfully saved.";
 			}
 			else {
 				$errorMessage = "Error while saving.";
 			}
-		}
+		
 		}
 	}
 	
@@ -142,9 +143,9 @@
 		<label for="Email  ">Email </label>
 		<input type="Email" id="email" name="email ">
 		<br><br>
-		<a href="https://github.com/AktaruzzamanEmon1">Personal Website Link </a>
-        
-        <br><br>
+		<label for="Link  ">Personal Website Link </label>
+		<input type="text" id="text" name="text ">
+		<br><br>
         </fieldset>
         </table>
 
