@@ -1,8 +1,6 @@
 <?php  
     require 'DbInsert.php'; 
 
-	$firstname =  $lastName = $userName = $password = "";
-	$isValid = true;
 	$firstNameErr =  $lastNameErr = $userNameErr = $passwordErr = "";
 	$successfulMessage = $errorMessage = "";
 	if($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -10,6 +8,7 @@
 		$lastName = $_POST['lastname'];
 		$userName = $_POST['username'];
 		$password = $_POST['password'];
+		$isValid = true;
 		if(empty($firstname)) {
 			$firstNameErr = "First name can not be empty!";
 			$isValid = false;
@@ -73,22 +72,22 @@
 <body>
 
 <h1>Registration Form</h1>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-<Form>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" name= "regitrationForm" onsubmit="return isvalid()">
+
 <table>
 	<fieldset>
 <legend>Basic Information:</legend>
 <br>
 	<label for="firstname">First Name:</label>
 			<input type="text" name="firstname" id="firstname">
-			<span style="color:red"><?php echo $firstNameErr; ?></span>
+			<span style="color:red" id="firstNameErr"><?php echo $firstNameErr; ?></span>
 
 			<br><br>
 
 
 			<label for="lastname">Last Name:</label>
 			<input type="text" name="lastname" id="lastname">
-			<span style="color:red"><?php echo $lastNameErr; ?></span>
+			<span style="color:red" id="lastNameErr"><?php echo $lastNameErr; ?></span>
 
 			<br>
 
@@ -156,18 +155,64 @@
        <legend>Acount Information:</legend>
         <label for="username">Username:</label>
 			<input type="text" name="username" id="username">
-			<span style="color:red"><?php echo $userNameErr; ?></span>
+			<span style="color:red" id="userNameErr"><?php echo $userNameErr; ?></span>
 
 			<br><br>
 
 			<label for="password">Password:</label>
 			<input type="password" name="password" id="password">
-			<span style="color:red"><?php echo $passwordErr; ?></span>
+			<span style="color:red" id="passwordErr"><?php echo $passwordErr; ?></span>
 		<input type="submit" value="Submit">
 
         
 
-</form>		
+</form>	
+<script>
+	function isvalid(){
+    var flag = true;
+    var firstNameErr = document.getElementById("firstNameErr"); 
+    var lastNameErr = document.getElementById("lastNameErr");
+    var userNameErr = document.getElementById("userNameErr");
+    var passwordErr = document.getElementById("passwordErr");
+    var firstName = document.forms["registrationForm"]["firstname"].value;
+    var lastName = document.forms["registrationForm"]["lastName"].value;
+    var userName = document.forms["registrationForm"]["userName"].value;
+    var password = document.forms["registrationForm"]["password"].value;
+    firstNameErr.innerHTML = "";
+    lastNameErr.innerHTML = "";
+    userNameErr.innerHTML = "";
+    passwordErr.innerHTML = "";
+
+    if (firstname === ""){
+    	flag = false;
+    	 firstNameErr.innerHTML = " Please fillup the first name";
+
+    }
+     if (lastname === ""){
+    	flag = false;
+    	 lastNameErr.innerHTML = " Please fillup the last name";
+
+    }
+     if (userName === ""){
+    	flag = false;
+    	 userNameErr.innerHTML = " Please fillup the user name";
+
+    }
+     if (password === ""){
+    	flag = false;
+    	 passwordErr.innerHTML = " Please fillup the password";
+
+    }
+    return flag;
+
+
+	}
+</script>
+
+
+
+
+
 <p>Back to<a href="Login.php">Login</a></p>
 
 	
